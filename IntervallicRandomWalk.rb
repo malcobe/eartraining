@@ -1,5 +1,5 @@
 # Starting from a reference pitch, this script will start a random walk
-# by choosing between two interval sizes.
+# by choosing among a collection of interval sizes.
 # The walk will take a number of steps before it goes back to the reference pitch.
 # Your goal is to keep track of the pitches visited, by recognizing
 # the intervals being used.
