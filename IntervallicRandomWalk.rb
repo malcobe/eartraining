@@ -1,25 +1,28 @@
 # Starting from a reference pitch, this script will start a random walk
 # by choosing between two interval sizes.
+# The walk will take a number of steps before it goes back to the reference pitch.
 # Your goal is to keep track of the pitches visited, by recognizing
-# the intervals being used
+# the intervals being used.
 
 # Change the random seed to take a different walk
 use_random_seed 0
 
 # Set up the pitch range
-$min_pitch = :E3
-$max_pitch = :A5
+$min_pitch = :F3
+$max_pitch = :F4
 
 # Set up the reference pitch
 # making sure it's within the pitch range above
 ref = :C4
 
-# Set up the interval sizes you'd like to practice on
+# Set up the interval sizes (in semitones) you'd like to practice on
 # making sure they fit within the pitch range above
 # starting from the central pitches of that range.
-# Be aware that in order to visit all the pitches in your pitch range
-# these sizes have to be coprime (1 being their only common divisor)
 $int_sizes = [1,2]
+
+# Set up the steps of your walk
+# before you go back to your reference pitch.
+max_steps = 2
 
 # Now you can run the script
 
@@ -35,6 +38,7 @@ def step(pitch)
 end
 
 pitch1 = ref
+steps = 1
 loop do
   pitch2 = step(pitch1)
   2.times {
@@ -47,5 +51,11 @@ loop do
   }
   play pitch1
   sleep 4
-  pitch1 = step(pitch1)
+  if steps < max_steps
+    pitch1 = step(pitch1)
+    steps = steps + 1
+  else
+    pitch1 = ref
+    steps = 1
+  end
 end
