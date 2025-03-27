@@ -3,6 +3,7 @@
 # The walk will take a number of steps before a new walk is started by going back to the reference pitch.
 # Your goal is to keep track of the pitches being visited.
 # You can take a rest between consecutive walks.
+# You can listen to the same walk a number of times.
 
 # Change the random seed to take a different walk
 use_random_seed 0
@@ -26,7 +27,10 @@ max_steps = 3
 step_duration = 1
 
 # Set the waiting time between consecutive walks in seconds
-waiting_time = 0
+waiting_time = 4
+
+# Set the number of times you want to listen to the same walk
+max_listens = 2
 
 # Now you can run the script
 
@@ -46,9 +50,11 @@ loop do
   max_steps.times {
     steps = steps.concat([step(steps[steps.length-1])])
   }
-  steps.each do |n|
-    play n
-    sleep step_duration
-  end
-  sleep waiting_time
+  max_listens.times {
+    steps.each do |n|
+      play n
+      sleep step_duration
+    end
+    sleep waiting_time
+  }
 end
